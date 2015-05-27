@@ -1,6 +1,6 @@
 ## Instructions
 
-1. close repository
+1. clone repository
 2. npm install
 3. start mongod: mongod
 4. node irony_gen.js
