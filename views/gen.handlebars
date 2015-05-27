@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+    <title>Comments on news articles</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<style>
+
+.green {
+color:green;
+}
+
+.orange {
+color:orange;
+}
+
+.grey {
+color:grey;
+}
+
+.blue {
+color:blue;
+}
+
+.btn-xlg {
+padding: 15px 20px;
+font-size: 35px;
+line-height: normal;
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>News Story + Sarcastic Comment</h2>
+  <form role="form">
+    <div class="form-group">
+      <label for="url">URL:</label>
+      <input type="text" class="form-control" id="url" placeholder="Enter URL" style="width:300px">
+    </div>
+    <div class="form-group">
+      <label for="text">Text:</label><br>
+      <textarea class="form-control" rows="10" id="story" placeholder="Enter Story" style="width:300px"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="text">Comment:</label><br>
+      <textarea class="form-control comment" id="comment" rows="4" placeholder="Enter Comment" maxlength="140" style="width:300px"></textarea>
+      <br>
+      <span class="countdown"></span>
+    </div>
+    <!-- <button type="submit" onclick="buttonSubmit()" class="btn btn-default">Submit</button> -->
+    <button type="button" onclick="buttonSubmit()" class="btn btn-default">Submit</button>
+  </form>
+</div>
+
+<script>
+
+function buttonSubmit() {
+  console.log(1);
+  // !!! ATTENTION !!!
+  // check if comment is > 0 characters in length
+  // check if other parts of the form are filled out
+  // get input from the form
+  var workerId = 'testWorkerId';
+  var url = document.getElementById('url').value;
+  var story = document.getElementById('story').value;
+  var comment = document.getElementById('comment').value;
+  console.log(url);
+  console.log(story);
+  console.log(comment);
+  $.post('/answer',
+    {
+      workerId: workerId,
+      url: url,
+      story: story,
+      comment: comment
+    },
+    function(data, status) {
+  });
+}
+
+function updateCountdown() {
+    // 140 is the max message length
+    var remaining = 140 - jQuery('.comment').val().length;
+    jQuery('.countdown').text(remaining + ' characters remaining.');
+}
+
+jQuery(document).ready(function($) {
+    updateCountdown();
+    $('.comment').change(updateCountdown);
+    $('.comment').keyup(updateCountdown);
+});
+</script>
+
+</body>
